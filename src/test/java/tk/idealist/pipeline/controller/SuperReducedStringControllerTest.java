@@ -9,8 +9,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import tk.idealist.pipeline.service.SuperReducedStringService;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = SuperReducedStringController.class)
 @Import(SuperReducedStringService.class)
