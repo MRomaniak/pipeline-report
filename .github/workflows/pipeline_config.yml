@@ -81,7 +81,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   check-code-coverage-rule:
-    needs: [build, publish-reports-and-badges]
+    needs: [build, publish-badges]
     runs-on: ubuntu-latest
 
     steps:
