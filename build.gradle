@@ -56,8 +56,8 @@ jacocoTestReport {
         xml.required = true
         csv.required = true
         html.outputLocation = layout.buildDirectory.dir('reports/jacoco/html')
-        xml.outputLocation = layout.buildDirectory.dir('reports/jacoco/xml').get().asFile
-        csv.outputLocation = layout.buildDirectory.dir('reports/jacoco/csv').get().asFile
+        xml.outputLocation = layout.buildDirectory.dir('reports/jacoco/coverage.xml').get().asFile
+        csv.outputLocation = layout.buildDirectory.dir('reports/jacoco/coverage.csv').get().asFile
     }
 
 //    to exclude from report completely
