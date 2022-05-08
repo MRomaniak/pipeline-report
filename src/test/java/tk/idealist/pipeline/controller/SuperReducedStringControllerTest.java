@@ -14,7 +14,7 @@ import tk.idealist.pipeline.service.SuperReducedStringService;
 @Import(SuperReducedStringService.class)
 class SuperReducedStringControllerTest {
 
-    private static final String URL = "/";
+    private static final String URL = "/srs";
 
     @Autowired
     private WebTestClient webTestClient;

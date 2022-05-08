@@ -11,7 +11,7 @@ import tk.idealist.pipeline.service.SuperReducedStringService;
 import java.util.Objects;
 
 @RequiredArgsConstructor
-@RequestMapping({"","/{input}"})
+@RequestMapping({"/srs","/srs/{input}"})
 @RestController
 public class SuperReducedStringController {
 
