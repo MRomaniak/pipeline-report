@@ -71,8 +71,10 @@ jacocoTestReport {
 jacocoTestCoverageVerification {
     violationRules {
         rule {
+            element = 'BUNDLE'
+
             limit {
-                counter = 'LINE'
+                counter = 'INSTRUCTION'
                 minimum = 0.80
             }
             limit {
