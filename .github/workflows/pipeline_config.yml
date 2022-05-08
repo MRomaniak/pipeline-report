@@ -34,3 +34,8 @@ jobs:
       with:
         name: Jacoco report
         path: build/reports/jacoco
+    - name: Generate JaCoCo Badge
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true
+        jacoco-csv-file: build/reports/jacoco/csv
