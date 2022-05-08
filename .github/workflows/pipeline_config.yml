@@ -52,7 +52,7 @@ jobs:
         generate-summary: true
 
   apply-notifications:
-    needs: [build, publish-reports-and-badges]
+    needs: [build, publish-badges]
     runs-on: ubuntu-latest
 
     steps:
