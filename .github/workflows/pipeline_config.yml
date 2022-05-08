@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,22 +26,22 @@ jobs:
         gradle-version: 7.4.1
         arguments: build --scan
 
-  publish-reports-and-badges:
+    - name: Upload reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: Reports
+        path: build/reports
+
+  publish-badges:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-    - name: Archive test report
-      uses: actions/upload-artifact@v2
+    - name: Download build-output artifact
+      uses: actions/download-artifact@master
       with:
-        name: Test report
-        path: build/reports/tests/test
-
-    - name: Archive Jacoco report
-      uses: actions/upload-artifact@v2
-      with:
-        name: Jacoco report
-        path: build/reports/jacoco
+        name: Reports
+        path: build/reports
 
     - name: Generate JaCoCo Badge
       uses: cicirello/jacoco-badge-generator@v2
