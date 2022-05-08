@@ -29,3 +29,8 @@ jobs:
       with:
         name: Test report
         path: build/reports/tests/test
+    - name: Archive Jacoco report
+      uses: actions/upload-artifact@v2
+      with:
+        name: Jacoco report
+        path: build/reports/jacoco
