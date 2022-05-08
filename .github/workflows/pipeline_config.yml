@@ -1,4 +1,4 @@
-name: GitHubActions with Gradle and Jacoco
+name: Java CI with Gradle
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -26,22 +27,17 @@ jobs:
         gradle-version: 7.4.1
         arguments: build --scan
 
-    - name: Upload reports
+    - name: Archive test report
       uses: actions/upload-artifact@v2
       with:
-        name: Reports
-        path: build/reports
+        name: Test report
+        path: build/reports/tests/test
 
-  generate-and-publish-badges:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Download Reports folder
-      uses: actions/download-artifact@master
+    - name: Archive Jacoco report
+      uses: actions/upload-artifact@v2
       with:
-        name: Reports
-        path: build/reports
+        name: Jacoco report
+        path: build/reports/jacoco
 
     - name: Generate JaCoCo Badge
       uses: cicirello/jacoco-badge-generator@v2
@@ -50,23 +46,6 @@ jobs:
         jacoco-csv-file: build/reports/jacoco/coverage.csv
         generate-branches-badge: true
         generate-summary: true
-
-    - name: Upload reports
-      uses: actions/upload-artifact@v2
-      with:
-        name: Badges
-        path: .github/badges
-
-  apply-notifications:
-    needs: [build, generate-and-publish-badges]
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Download Badges folder
-      uses: actions/download-artifact@master
-      with:
-        name: Badges
-        path: .github/badges
 
     - name: Commit and push the coverage badges and summary file
       if: ${{ github.event_name != 'pull_request' }}
@@ -91,25 +70,3 @@ jobs:
         gh pr comment ${{github.event.pull_request.number}} -b "${BODY}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  check-code-coverage-rule:
-    needs: [build, generate-and-publish-badges]
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Download Gradle build
-      uses: actions/download-artifact@master
-      with:
-        name: Gradle build
-        path: build.gradle
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-
-    - name: Check with Gradle
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-      with:
-        gradle-version: 7.4.1
-        arguments: check

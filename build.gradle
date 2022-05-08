@@ -45,12 +45,6 @@ test {
 //    }
 }
 
-gradle.taskGraph.whenReady { graph ->
-    if (graph.hasTask(test)) {
-        tasks.findByName('jacocoTestCoverageVerification').enabled(false)
-    }
-}
-
 jacoco {
     toolVersion = '0.8.7'
 }
