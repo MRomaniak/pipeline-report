@@ -38,9 +38,11 @@ if (hasProperty('buildScan')) {
 
 test {
     finalizedBy jacocoTestReport
-}
-jacocoTestReport {
-    dependsOn test
+
+//    to include in report but do not calculate coverage
+//    jacoco {
+//        excludes += ['tk/idealist/pipeline/BuildReportApplication**']
+//    }
 }
 
 jacoco {
@@ -48,11 +50,20 @@ jacoco {
 }
 
 jacocoTestReport {
+    dependsOn test
+
     reports {
         xml.required = true
         csv.required = true
         html.outputLocation = layout.buildDirectory.dir('reports/jacoco/html')
         xml.outputLocation = layout.buildDirectory.dir('reports/jacoco/xml').get().asFile
         csv.outputLocation = layout.buildDirectory.dir('reports/jacoco/csv').get().asFile
+    }
+
+//    to exclude from report completely
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'tk/idealist/pipeline/BuildReportApplication.class')
+        }))
     }
 }
