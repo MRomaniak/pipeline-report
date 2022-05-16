@@ -39,16 +39,26 @@ jobs:
           name: Jacoco report
           path: build/reports/jacoco
 
-      - name: Generate JaCoCo Badge
+      - name: Generate JaCoCo Badge (master)
         uses: cicirello/jacoco-badge-generator@v2
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           badges-directory: .github/badges
           jacoco-csv-file: build/reports/jacoco/coverage.csv
           generate-branches-badge: true
           generate-summary: true
 
+      - name: Generate JaCoCo Badge (branch)
+        uses: cicirello/jacoco-badge-generator@v2
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          badges-directory: .github/badges
+          jacoco-csv-file: build/reports/jacoco/diffCoverage/report.csv
+          generate-branches-badge: true
+          generate-summary: true
+
       - name: Commit and push the coverage badges and summary file
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           cd .github/badges
           if [[ `git status --porcelain *.svg *.json` ]]; then
@@ -75,7 +85,7 @@ jobs:
         uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
         with:
           gradle-version: 7.4.1
-          arguments: check
+          arguments: diffCoverage
 
       - name: Upload jar file
         uses: actions/upload-artifact@v2

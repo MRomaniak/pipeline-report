@@ -1,9 +1,20 @@
+buildscript {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.github.form-com.diff-coverage-gradle:diff-coverage:0.9.2'
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.6.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'jacoco'
 }
+
+apply plugin: 'com.form.diff-coverage'
 
 configurations {
     compileOnly {
@@ -87,3 +98,24 @@ jacocoTestCoverageVerification {
 
 // to run coverage verification during the build (and fail when appropriate)
 check.dependsOn jacocoTestCoverageVerification
+
+diffCoverageReport {
+    diffSource {
+        git.compareWith 'refs/remotes/origin/master'
+    }
+    classesDirs = files('build/classes')
+
+    violationRules {
+        minBranches = 0.75
+        minInstructions = 0.80
+        failOnViolation = true
+    }
+
+    reports {
+        html = true
+        xml = true
+        csv = true
+    }
+}
+
+diffCoverage.dependsOn += check
