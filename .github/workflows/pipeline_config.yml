@@ -86,8 +86,8 @@ jobs:
       - name: Check Code Coverage Rules
         run: |
           REPORT=$(<.github/badges/coverage-summary.json)
-          COVERAGE=$(jq -r '.coverage' | tonumber <<< "$REPORT")
-          BRANCHES=$(jq -r '.branches' | tonumber <<< "$REPORT")
+          COVERAGE=$(jq -r '.coverage|tonumber' <<< "$REPORT")
+          BRANCHES=$(jq -r '.branches|tonumber' <<< "$REPORT")
           COVERAGE_FAILED="Code Coverage Rules is violated. Coverage for lines should be more or equals to 80% but is ${COVERAGE}%"
           BRANCHES_FAILED="Code Coverage Rules is violated. Coverage for branches should be more or equals to 75% but is ${BRANCHES}%"
           
