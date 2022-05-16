@@ -79,9 +79,9 @@ jobs:
 
       - name: Upload jar file
         uses: actions/upload-artifact@v2
-          with:
-            name: App JAR
-            path: build/libs/pipeline-report.jar
+        with:
+          name: App JAR
+          path: build/libs/pipeline-report.jar
 
   store_image:
     name: Store Docker image
