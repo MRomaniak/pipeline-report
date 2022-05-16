@@ -21,17 +21,11 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Build with Gradle
+      - name: Build with Gradle and Run Code Coverage Difference Report
         uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
         with:
           gradle-version: 7.4.1
-          arguments: build -x jacocoTestCoverageVerification --scan
-
-      - name: Run Code Coverage Difference Report
-        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-        with:
-          gradle-version: 7.4.1
-          arguments: diffCoverage -x jacocoTestCoverageVerification
+          arguments: build diffCoverage -x jacocoTestCoverageVerification --scan
 
       - name: Archive test report
         uses: actions/upload-artifact@v2
@@ -109,12 +103,6 @@ jobs:
           then
             exit 1
           fi
-
-      - name: Check Code coverage rules
-        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-        with:
-          gradle-version: 7.4.1
-          arguments: diffCoverage -x jacocoTestCoverageVerification
 
       - name: Upload jar file
         uses: actions/upload-artifact@v2
