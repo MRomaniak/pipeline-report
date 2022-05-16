@@ -59,7 +59,7 @@ jobs:
           generate-branches-badge: true
           generate-summary: true
 
-      - name: Commit and push the coverage badges and summary file
+      - name: Commit and push the coverage badges and summary file (master)
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           cd .github/badges
@@ -71,7 +71,7 @@ jobs:
             git push
           fi
 
-      - name: Comment on PR with coverage percentages
+      - name: Comment on PR with coverage percentages (dev branch)
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           REPORT=$(<.github/badges/coverage-summary.json)
@@ -141,7 +141,7 @@ jobs:
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY_NAME }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: 0.1
         run: |
