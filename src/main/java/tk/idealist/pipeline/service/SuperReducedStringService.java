@@ -11,9 +11,7 @@ public class SuperReducedStringService {
         if (s.isEmpty()) {
             return EMPTY_STRING_TEXT;
         }
-        return s.length() == 1
-            ? s
-            : reduceString(s);
+        return s.length() == 1 ? s : reduceString(s);
     }
 
     private String reduceString(String s) {
