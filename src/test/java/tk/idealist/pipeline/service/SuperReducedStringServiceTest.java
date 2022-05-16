@@ -14,42 +14,38 @@ class SuperReducedStringServiceTest {
     @InjectMocks
     private SuperReducedStringService superReducedStringService;
 
-//    @Test
-//    void testReduceWhenEmptyInput() {
-//        var input = "";
-//        var result = superReducedStringService.reduce(input);
-//        Assertions.assertEquals(EMPTY_STRING_OUTPUT, result);
-//    }
-//
-//    @Test
-//    void testReduceWhenPassedSingleSymbol() {
-//        var input = "a";
-//        var result = superReducedStringService.reduce(input);
-//        Assertions.assertEquals(input, result);
-//    }
-//
-//    @Test
-//    void testReduceWhenTheSameSymbolsPassedTwice() {
-//        var input = "aa";
-//        var result = superReducedStringService.reduce(input);
-//        Assertions.assertEquals(EMPTY_STRING_OUTPUT, result);
-//    }
-//
-//    @Test
-//    void testReduceWhenEvenNumberOfTimesPassedTheSameSymbol() {
-//        var input = "bbbb";
-//        var result = superReducedStringService.reduce(input);
-//        Assertions.assertEquals(EMPTY_STRING_OUTPUT, result);
-//    }
-//
-//    @Test
-//    void testReduceWhenPassedSymboldAreReduced() {
-//        var input = "abbbC1223";
-//        var result = superReducedStringService.reduce(input);
-//        Assertions.assertEquals("abC13", result);
-//    }
     @Test
-    void test() {
-        Assertions.assertTrue(true);
+    void testReduceWhenEmptyInput() {
+        var input = "";
+        var result = superReducedStringService.reduce(input);
+        Assertions.assertEquals(EMPTY_STRING_OUTPUT, result);
+    }
+
+    @Test
+    void testReduceWhenPassedSingleSymbol() {
+        var input = "a";
+        var result = superReducedStringService.reduce(input);
+        Assertions.assertEquals(input, result);
+    }
+
+    @Test
+    void testReduceWhenTheSameSymbolsPassedTwice() {
+        var input = "aa";
+        var result = superReducedStringService.reduce(input);
+        Assertions.assertEquals(EMPTY_STRING_OUTPUT, result);
+    }
+
+    @Test
+    void testReduceWhenEvenNumberOfTimesPassedTheSameSymbol() {
+        var input = "bbbb";
+        var result = superReducedStringService.reduce(input);
+        Assertions.assertEquals(EMPTY_STRING_OUTPUT, result);
+    }
+
+    @Test
+    void testReduceWhenPassedSymboldAreReduced() {
+        var input = "abbbC1223";
+        var result = superReducedStringService.reduce(input);
+        Assertions.assertEquals("abC13", result);
     }
 }

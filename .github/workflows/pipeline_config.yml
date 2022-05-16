@@ -91,7 +91,7 @@ jobs:
           COVERAGE_FAILED="Code Coverage Rules is violated. Coverage for lines should be more than to 80% but in fact is ${COVERAGE}%."
           BRANCHES_FAILED="Code Coverage Rules is violated. Coverage for branches should be more than 75% but in fact is ${BRANCHES}%."
           
-          echo "COVERED = ${COVERAGE} -- ${BRANCHES}"
+          echo "COVERED[line=${COVERAGE}; branches:${BRANCHES}%"
           
           echo $GITHUB_EVENT_PATH
           
