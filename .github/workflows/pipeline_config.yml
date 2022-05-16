@@ -97,13 +97,13 @@ jobs:
             echo "ALL COVERED"
           fi
           
-          if [[ ${COVERAGE} < 80 ]]; then 
+          if [[ ${COVERAGE} -lt 80 ]]; then 
             echo ${COVERAGE_FAILED}
           fi
-          if [[ ${BRANCHES} < 75 ]]; then 
+          if [[ ${BRANCHES} -lt 75 ]]; then 
             echo ${BRANCHES_FAILED}
           fi
-          if [[ ${COVERAGE} < 80 || ${BRANCHES} < 75 ]]; then
+          if [[ ${COVERAGE} -lt 80 || ${BRANCHES} -lt 75 ]]; then
             exit 1
           fi
 
