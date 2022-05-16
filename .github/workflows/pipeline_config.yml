@@ -27,6 +27,12 @@ jobs:
           gradle-version: 7.4.1
           arguments: build -x jacocoTestCoverageVerification --scan
 
+      - name: Run Code Coverage Difference Report
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+        with:
+          gradle-version: 7.4.1
+          arguments: diffCoverage -x jacocoTestCoverageVerification
+
       - name: Archive test report
         uses: actions/upload-artifact@v2
         with:
@@ -48,7 +54,7 @@ jobs:
           generate-branches-badge: true
           generate-summary: true
 
-      - name: Generate JaCoCo Badge (branch)
+      - name: Generate JaCoCo Badge (dev branch)
         uses: cicirello/jacoco-badge-generator@v2
         if: ${{ github.event_name == 'pull_request' }}
         with:
@@ -81,11 +87,34 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check Code Coverage Rules
+        if:
+        run: |
+          REPORT=$(<.github/badges/coverage-summary.json)
+          COVERAGE=$(jq -r '.coverage' <<< "$REPORT")%
+          BRANCHES=$(jq -r '.branches' <<< "$REPORT")%
+          NEWLINE=$'\n'
+          BODY="## JaCoCo Test Coverage Summary Statistics${NEWLINE}* __Coverage:__ ${COVERAGE}${NEWLINE}* __Branches:__ ${BRANCHES}"
+          COVERAGE_FAILED="Code Coverage Rules is violated. Coverage for lines should be more or equals to 0.80 but is ${COVERAGE}"
+          BRANCHES_FAILED="Code Coverage Rules is violated. Coverage for branches should be more or equals to 0.75 but is ${BRANCHES}"
+          if ${COVERAGE} < 0.80
+          then 
+            echo ${COVERAGE_FAILED}
+          fi
+          if ${BRANCHES} < 0.75
+          then 
+            echo ${BRANCHES_FAILED}
+          fi
+          if ${COVERAGE} < 0.80 || ${BRANCHES} < 0.75
+          then
+            exit 1
+          fi
+
       - name: Check Code coverage rules
         uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
         with:
           gradle-version: 7.4.1
-          arguments: diffCoverage
+          arguments: diffCoverage -x jacocoTestCoverageVerification
 
       - name: Upload jar file
         uses: actions/upload-artifact@v2

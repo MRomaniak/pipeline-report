@@ -105,15 +105,8 @@ diffCoverageReport {
     }
     classesDirs = files('build/classes')
 
-    violationRules {
-        minBranches = 0.75
-        minInstructions = 0.80
-        failOnViolation = true
-    }
-
     reports {
         html = true
-        xml = true
         csv = true
     }
 }
