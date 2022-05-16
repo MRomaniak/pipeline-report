@@ -114,7 +114,7 @@ jobs:
   store_image:
     name: Store Docker image
     needs: build
-    if: ${{ github.event.pull_request.merged && github.base_ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
 
     steps:
