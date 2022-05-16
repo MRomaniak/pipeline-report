@@ -84,7 +84,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Code Coverage Rules
-        if:
+        shell: bash
         run: |
           REPORT=$(<.github/badges/coverage-summary.json)
           COVERAGE=$(jq -r '.coverage' <<< "$REPORT")%
@@ -93,6 +93,7 @@ jobs:
           BODY="## JaCoCo Test Coverage Summary Statistics${NEWLINE}* __Coverage:__ ${COVERAGE}${NEWLINE}* __Branches:__ ${BRANCHES}"
           COVERAGE_FAILED="Code Coverage Rules is violated. Coverage for lines should be more or equals to 0.80 but is ${COVERAGE}"
           BRANCHES_FAILED="Code Coverage Rules is violated. Coverage for branches should be more or equals to 0.75 but is ${BRANCHES}"
+          
           if ${COVERAGE} < 0.80
           then 
             echo ${COVERAGE_FAILED}
