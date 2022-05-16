@@ -101,7 +101,7 @@ check.dependsOn jacocoTestCoverageVerification
 
 diffCoverageReport {
     diffSource {
-        git.compareWith 'origin/master'
+        git.compareWith 'master'
     }
     classesDirs = files('build/classes')
 
