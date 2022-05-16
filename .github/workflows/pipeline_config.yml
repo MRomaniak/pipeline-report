@@ -77,6 +77,12 @@ jobs:
           gradle-version: 7.4.1
           arguments: check
 
+      - name: Upload jar file
+        uses: actions/upload-artifact@v2
+          with:
+            name: App JAR
+            path: build/libs/pipeline-report.jar
+
   store_image:
     name: Store Docker image
     needs: build
@@ -85,6 +91,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Download jar file
+        uses: actions/download-artifact@master
+        with:
+          name: App JAR
+          path: build/libs/pipeline-report.jar
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
