@@ -93,6 +93,8 @@ jobs:
           COVERAGE_FAILED="Code Coverage Rules is violated. Coverage for lines should be more or equals to 0.80 but is ${COVERAGE}"
           BRANCHES_FAILED="Code Coverage Rules is violated. Coverage for branches should be more or equals to 0.75 but is ${BRANCHES}"
           
+          echo ${COVERAGE}--${BRANCHES}
+          
           if [[ ${COVERAGE} < 0.80 ]]; then 
             echo ${COVERAGE_FAILED}
           fi
