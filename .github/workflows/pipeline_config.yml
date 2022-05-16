@@ -90,18 +90,22 @@ jobs:
           BRANCHES=$(jq -r '.branches' <<< "$REPORT")%
           NEWLINE=$'\n'
           BODY="## JaCoCo Test Coverage Summary Statistics${NEWLINE}* __Coverage:__ ${COVERAGE}${NEWLINE}* __Branches:__ ${BRANCHES}"
-          COVERAGE_FAILED="Code Coverage Rules is violated. Coverage for lines should be more or equals to 0.80 but is ${COVERAGE}"
-          BRANCHES_FAILED="Code Coverage Rules is violated. Coverage for branches should be more or equals to 0.75 but is ${BRANCHES}"
+          COVERAGE_FAILED="Code Coverage Rules is violated. Coverage for lines should be more or equals to 80% but is ${COVERAGE}"
+          BRANCHES_FAILED="Code Coverage Rules is violated. Coverage for branches should be more or equals to 75% but is ${BRANCHES}"
           
           echo ${COVERAGE}--${BRANCHES}
           
-          if [[ ${COVERAGE} < 0.80 ]]; then 
+          if [[ ${COVERAGE} == 100% ]]; then 
+            echo "ALL COVERED"
+          fi
+          
+          if [[ ${COVERAGE} < 80% ]]; then 
             echo ${COVERAGE_FAILED}
           fi
-          if [[ ${BRANCHES} < 0.75 ]]; then 
+          if [[ ${BRANCHES} < 75% ]]; then 
             echo ${BRANCHES_FAILED}
           fi
-          if [[ ${COVERAGE} < 0.80 || ${BRANCHES} < 0.75 ]]; then
+          if [[ ${COVERAGE} < 80% || ${BRANCHES} < 75% ]]; then
             exit 1
           fi
 
