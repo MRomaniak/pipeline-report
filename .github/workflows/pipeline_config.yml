@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 env:
-  buildNumber: 0.${{ github.run_number }}
+  buildNumber: {{ github.run_number }}
 
 jobs:
   build:
@@ -148,11 +148,13 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
-          IMAGE_TAG: ${{ env.buildNumber }}
+          IMAGE_TAG: 0.${{ env.buildNumber }}
         run: |
+          echo ls -la
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo ls -la
 
       - name: Log out of Amazon ECR
         if: always()
