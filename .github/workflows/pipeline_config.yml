@@ -151,7 +151,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           cd build/libs/
-          ll
+          ls -la
 
       - name: Log out of Amazon ECR
         if: always()
