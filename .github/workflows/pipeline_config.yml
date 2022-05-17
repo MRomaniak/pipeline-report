@@ -110,7 +110,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: App JAR
-          path: build/libs/pipeline-report.jar
+          path: build/libs
 
   store_image:
     name: Store Docker image
@@ -127,7 +127,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: App JAR
-          path: build/libs/pipeline-report.jar
+          path: build/libs
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -147,13 +147,11 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: 0.${{ github.run_number }}
         run: |
-          ls -la
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          ls -la
           cd build/libs/
-          ls -la
+          ll
 
       - name: Log out of Amazon ECR
         if: always()
