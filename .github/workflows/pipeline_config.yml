@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 env:
-  buildNumber: {{ github.run_number }}
+  buildNumber: ${{ github.run_number }}
 
 jobs:
   build:
