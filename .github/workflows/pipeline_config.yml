@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  buildNumber: ${GITHUB_RUN_NUMBER}
+
 jobs:
   build:
     name: Build
@@ -119,12 +122,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Generate build number
-        id: buildnumber
-        uses: einaregilsson/build-number@v3
-        with:
-          token: ${{ secrets.github_token }}
-          prefix: "0."
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -151,7 +148,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
-          IMAGE_TAG: ${{ steps.buildnumber.outputs.build_number }}
+          IMAGE_TAG: ${{ env.buildNumber }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
