@@ -1,3 +1,4 @@
 FROM adoptopenjdk/openjdk11:jre-11.0.6_10-alpine
-COPY build/libs/pipeline-report.jar /app.jar
+ARG JAR_FILE=build/libs/pipeline-report.jar
+COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
